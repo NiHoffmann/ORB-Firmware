@@ -27,6 +27,9 @@ extern ServoTask   servoTask[ NUM_OF_SERVO_PORTS  ];
 extern Digital taster1;
 extern Digital taster2;
 
+extern PythonTask pythonTask;
+
+
 //*******************************************************************
 //
 // Remote
@@ -70,10 +73,14 @@ void Remote::update()
 
   ipc.update();
 
+  if(pythonTask.expectionReady()){
+    pythonTask.writeException();
+  }
+
   //-------------------------------------------------------------
   if( configIn.isNew() )
   {
-    if( !ui.isAppActive() )
+    if( !ui.isAppActive())
     {
       configReceivedFlag = true;
 
@@ -207,8 +214,9 @@ void Remote::update()
     // read other data
     d.Vcc = ctrl.getVcc();
 
-    d.status =   (( ui.isAppActive()  ? 1 : 0 ) << 0 )
-               | (( configReceivedFlag? 1 : 0 ) << 1 );
+    //TODO make sure the 0-Bit for this flag is set otherwise the orb-monitor wont update
+    d.status =   (( ui.isAppActive() || pythonTask.expectionReady()  ? 1 : 0 ) << 0 )
+               | (( configReceivedFlag ? 1 : 0 ) << 1 );
 
     configReceivedFlag = false;
 

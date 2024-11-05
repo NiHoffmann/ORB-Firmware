@@ -59,7 +59,7 @@
 
 .global  g_pfnVectors
 .global  Default_Handler
-
+.extern Firmware_Exception_Handler
 /* start address for the initialization values of the .data section.
 defined in linker script */
 .word  _sidata
@@ -136,6 +136,7 @@ LoopFillZerobss:
 */
     .section  .text.Default_Handler,"ax",%progbits
 Default_Handler:
+  bl Firmware_Exception_Handler
 Infinite_Loop:
   b  Infinite_Loop
   .size  Default_Handler, .-Default_Handler

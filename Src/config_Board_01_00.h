@@ -256,9 +256,9 @@ DigitalIndicator pwrIndicator(ledPwr, taskManager, 100 );
 
 //
 //-----------
-Memory_Flash  mem0( 5 );
-Memory_Flash  mem1( 6 );
-Memory_Flash  mem2( 7 );
+Memory_Flash  mem0( 11 );
+Memory_Flash  mem1( 10 );
+Memory_Flash  mem2( 9 );
 //Memory_Flash  mem3_1( cHwMemory_Flash::SECTOR_7 );
 //Memory_RAM    mem3_2;
 

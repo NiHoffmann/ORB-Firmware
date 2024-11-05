@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.60" revision="0" />
+	<EmBitzVersion release="2.50" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="main" />
 		<Option pch_mode="2" />
 		<Option compiler="armgcc_eb" />
 		<Build>
+			<Target title="rebuild micropython">
+				<Option output="main_GCC.ebp" />
+				<Option type="0" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Option projectCompilerOptionsRelation="1" />
+				<ExtraCommands>
+					<Add before=".\..\..\ORB-Python\rebuild_mp_embed.bat" />
+					<Mode before="1" />
+					<Mode after="1" />
+				</ExtraCommands>
+			</Target>
 			<Target title="Board-00.22">
 				<Option output=".\..\Bin\orb-hw${HW_MAIN}${HW_SUB}.elf" />
 				<Option object_output=".\..\.Build\${HW_MAIN}${HW_SUB}" />
@@ -21,7 +33,6 @@
 					<Add option="$heap=0x0800" />
 				</Device>
 				<Compiler>
-					<Add option="-mfloat-abi=hard" />
 					<Add option="-Wall" />
 					<Add option="-fdata-sections" />
 					<Add option="-ffunction-sections" />
@@ -82,7 +93,6 @@
 					<Add option="$heap=0x0800" />
 				</Device>
 				<Compiler>
-					<Add option="-mfloat-abi=hard" />
 					<Add option="-Wall" />
 					<Add option="-fdata-sections" />
 					<Add option="-ffunction-sections" />
@@ -143,7 +153,6 @@
 					<Add option="$heap=0x0800" />
 				</Device>
 				<Compiler>
-					<Add option="-mfloat-abi=hard" />
 					<Add option="-Wall" />
 					<Add option="-fdata-sections" />
 					<Add option="-ffunction-sections" />
@@ -196,9 +205,10 @@
 			</Environment>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="Board-00.22;Board-00.30;Board-01.00;" />
+			<Add alias="All" targets="Board-00.22;Board-01.00;Board-00.30;" />
 		</VirtualTargets>
 		<Compiler>
+			<Add option="-mfloat-abi=hard" />
 			<Add option="-fdata-sections" />
 			<Add option="-ffunction-sections" />
 			<Add option="-O0" />
@@ -229,10 +239,17 @@
 			<Add directory="${EMBSYSLIB}\Src" />
 			<Add directory="${EMBSYSLIB}\Src\Hardware\MCU\STM32F4xx" />
 			<Add directory="${EMBSYSLIB}\Src\Hardware\MCU\STM32F4xx\Sys\GCC" />
+			<Add directory="..\..\ORB-Python\src\python-vm" />
+			<Add directory="..\..\ORB-Python\src\modules" />
+			<Add directory="..\..\ORB-Python\src\c_interface\implementation" />
+			<Add directory="..\..\ORB-Python\libs\mp_embed" />
+			<Add directory="..\..\ORB-Python\libs\mp_embed\micropython_embed" />
+			<Add directory="..\..\ORB-Python\libs\mp_embed\micropython_embed\port" />
 		</Compiler>
 		<Cpp>
 			<Add option="-fdata-sections" />
 			<Add option="-ffunction-sections" />
+			<Add option="-O0" />
 			<Add option="-g3" />
 			<Add option="-fno-strict-aliasing" />
 		</Cpp>
@@ -242,101 +259,1635 @@
 		<Linker>
 			<Add option="-eb_lib=n" />
 		</Linker>
+		<Unit filename="..\Common\Src\ORB.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Common\Src\ORBlocal.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Common\Src\Properties.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\AppTask.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\AppTask.h" />
-		<Unit filename="..\Src\Bluetooth\Bluetooth.h" />
-		<Unit filename="..\Src\Bluetooth\BT_RN41.h" />
-		<Unit filename="..\Src\Bluetooth\BT_RN4678.h" />
-		<Unit filename="..\Src\config.h" />
+		<Unit filename="..\Src\AppTask.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\Bluetooth\Bluetooth.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\Bluetooth\BT_RN41.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\Bluetooth\BT_RN4678.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\config.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Control.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Control.h" />
+		<Unit filename="..\Src\Control.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\ExceptionHandler.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\lib.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\lib.h" />
+		<Unit filename="..\Src\lib.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\main.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
 		<Unit filename="..\Src\Monitor.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Monitor.h" />
+		<Unit filename="..\Src\Monitor.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Motor.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Motor.h" />
+		<Unit filename="..\Src\Motor.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\MotorTask.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\MotorTask.h" />
-		<Unit filename="..\Src\MovingAverage.h" />
-		<Unit filename="..\Common\Src\ORB.h" />
-		<Unit filename="..\Common\Src\ORBlocal.h" />
-		<Unit filename="..\Common\Src\Properties.h" />
+		<Unit filename="..\Src\MotorTask.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\MovingAverage.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\PythonTask.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\PythonTask.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Remote.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Remote.h" />
+		<Unit filename="..\Src\Remote.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor.h" />
+		<Unit filename="..\Src\Sensor.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor\SensorAnalog.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor\SensorAnalog.h" />
+		<Unit filename="..\Src\Sensor\SensorAnalog.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor\SensorDebug.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor\SensorDebug.h" />
+		<Unit filename="..\Src\Sensor\SensorDebug.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor\SensorI2C.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor\SensorI2C.h" />
+		<Unit filename="..\Src\Sensor\SensorI2C.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor\SensorI2C\SensorI2C_NXTultraschall.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor\SensorI2C\SensorI2C_NXTultraschall.h" />
-		<Unit filename="..\Src\Sensor\SensorI2C_Strategy.h" />
-		<Unit filename="..\Src\SensorTask.cpp">
-			<Option compilerVar="CC" />
+		<Unit filename="..\Src\Sensor\SensorI2C\SensorI2C_NXTultraschall.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\SensorTask.h" />
+		<Unit filename="..\Src\Sensor\SensorI2C_Strategy.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor\SensorTOF.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor\SensorTOF.h" />
+		<Unit filename="..\Src\Sensor\SensorTOF.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor\SensorTouch.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor\SensorTouch.h" />
+		<Unit filename="..\Src\Sensor\SensorTouch.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Sensor\SensorUART.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Sensor\SensorUART.h" />
+		<Unit filename="..\Src\Sensor\SensorUART.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\SensorTask.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\Src\SensorTask.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\ServoTask.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\ServoTask.h" />
+		<Unit filename="..\Src\ServoTask.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\Settings.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\Settings.h" />
+		<Unit filename="..\Src\Settings.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\startup.S">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\UART_Ext.h" />
+		<Unit filename="..\Src\UART_Ext.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Unit filename="..\Src\UserInterface.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
 		</Unit>
-		<Unit filename="..\Src\UserInterface.h" />
+		<Unit filename="..\Src\UserInterface.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\build-embed\genhdr\moduledefs.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\build-embed\genhdr\mpversion.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\build-embed\genhdr\qstrdefs.collected.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\build-embed\genhdr\qstrdefs.generated.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\build-embed\genhdr\qstrdefs.preprocessed.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\build-embed\genhdr\root_pointers.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\extmod\modplatform.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\genhdr\moduledefs.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\genhdr\mpversion.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\genhdr\qstrdefs.generated.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\genhdr\root_pointers.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\port\embed_util.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\port\micropython_embed.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\port\mpconfigport_common.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\port\mphalport.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\port\mphalport.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\argcheck.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmarm.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmarm.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmbase.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmbase.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmrv32.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmrv32.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmthumb.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmthumb.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmx64.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmx64.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmx86.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmx86.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmxtensa.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\asmxtensa.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\bc.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\bc.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\bc0.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\binary.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\binary.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\builtin.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\builtinevex.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\builtinhelp.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\builtinimport.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\compile.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\compile.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\cstack.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\cstack.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\dynruntime.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emit.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitbc.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitcommon.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitglue.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitglue.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitinlinethumb.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitinlinextensa.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnarm.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnative.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitndebug.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnrv32.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnthumb.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnx64.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnx86.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnxtensa.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\emitnxtensawin.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\formatfloat.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\formatfloat.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\frozenmod.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\frozenmod.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\gc.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\gc.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\grammar.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\lexer.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\lexer.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\malloc.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\map.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\misc.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modarray.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modbuiltins.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modcmath.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modcollections.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\moderrno.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modgc.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modio.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modmath.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modmicropython.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modstruct.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modsys.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\modthread.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpconfig.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mperrno.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mphal.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpprint.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpprint.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpstate.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpstate.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpthread.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpz.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\mpz.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nativeglue.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nativeglue.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlr.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlr.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlraarch64.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrmips.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrpowerpc.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrrv32.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrsetjmp.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrthumb.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrx64.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrx86.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\nlrxtensa.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\obj.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\obj.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objarray.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objarray.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objattrtuple.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objbool.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objboundmeth.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objcell.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objclosure.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objcomplex.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objdeque.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objdict.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objenumerate.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objexcept.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objexcept.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objfilter.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objfloat.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objfun.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objfun.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objgenerator.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objgenerator.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objgetitemiter.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objint.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objint.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objint_longlong.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objint_mpz.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objlist.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objlist.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objmap.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objmodule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objmodule.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objnamedtuple.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objnamedtuple.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objnone.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objobject.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objpolyiter.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objproperty.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objrange.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objreversed.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objset.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objsingleton.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objslice.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objstr.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objstr.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objstringio.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objstringio.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objstrunicode.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objtuple.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objtuple.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objtype.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objtype.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\objzip.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\opmethods.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\pairheap.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\pairheap.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\parse.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\parse.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\parsenum.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\parsenum.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\parsenumbase.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\parsenumbase.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\persistentcode.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\persistentcode.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\profile.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\profile.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\pystack.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\pystack.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\qstr.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\qstr.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\qstrdefs.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\reader.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\reader.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\repl.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\repl.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\ringbuf.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\ringbuf.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\runtime.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\runtime.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\runtime0.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\runtime_utils.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\scheduler.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\scope.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\scope.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\sequence.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\showbc.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\smallint.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\smallint.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\stackctrl.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\stackctrl.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\stream.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\stream.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\unicode.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\unicode.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\vm.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\vmentrytable.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\vstr.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\py\warning.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\shared\runtime\gchelper.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\micropython_embed\shared\runtime\gchelper_generic.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\libs\mp_embed\mpconfigport.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Memory_C_Interface.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Memory_C_Interface.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Monitor_C_Interface.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Monitor_C_Interface.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Motor_C_Interface.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Motor_C_Interface.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Sensor_C_Interface.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Sensor_C_Interface.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Servo_C_Interface.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Servo_C_Interface.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Time_C_Interface.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\c_interface\implementation\Time_C_Interface.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\DevicesModule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Motor\MotorModule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Motor\MotorModule.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Sensor\SensorModule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Sensor\SensorModule.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Servo\ServoModule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Servo\ServoModule.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Memory\MemoryModule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Monitor\KeyConstants.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Monitor\KeyConstants.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Monitor\MonitorModule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\qstr.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Time\TimeModule.c">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\python-vm\helper.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\python-vm\orb_config_port.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\python-vm\python-vm.cpp">
+			<Option compilerVar="CC" />
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\python-vm\python-vm.h">
+			<Option target="Board-00.22" />
+			<Option target="Board-00.30" />
+			<Option target="Board-01.00" />
+		</Unit>
 		<Extensions>
 			<code_completion />
-			<debugger />
+			<debugger>
+				<target_debugging_settings target="Board-00.22">
+					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="7791912" unwind="1641417720" rstType="139027196" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+				</target_debugging_settings>
+				<target_debugging_settings target="rebuild micropython">
+					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="7791912" unwind="1641417720" rstType="174608460" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+				</target_debugging_settings>
+				<target_debugging_settings target="Board-00.30">
+					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="7796888" unwind="1641417720" rstType="169021380" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+				</target_debugging_settings>
+			</debugger>
 			<envvars />
 			<DoxyBlocks>
 				<comment_style block="0" line="0" />

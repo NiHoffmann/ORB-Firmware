@@ -10,6 +10,7 @@
 
 //*******************************************************************
 #include "AppTask.h"
+#include "mpconfigport.h"
 
 //*******************************************************************
 extern SensorTask   sTask[ NUM_OF_SENSOR_PORTS ];
@@ -63,29 +64,24 @@ void AppTask::update( )
 
   orb.ptr  = this;
 
- // unsigned *addr = (unsigned*)0x8080000;
-
 //*******************************************************************
 #if (BOARD_MAIN == 00 && BOARD_SUB == 22)
 
- unsigned *addr = (unsigned*)0x8020000;
+ unsigned *addr = (unsigned*)0x80E0004;
 
 #elif (BOARD_MAIN == 00 && BOARD_SUB == 30)
 
- unsigned *addr = (unsigned*)0x8020000;
+ unsigned *addr = (unsigned*)0x80E0004;
 
 #elif (BOARD_MAIN == 01 && BOARD_SUB == 00)
 
- unsigned *addr = (unsigned*)0x8020000;
+ unsigned *addr = (unsigned*)0x80E0004;
 
 #else
 
   #error "Board hardware version not defined"
 
 #endif
-
-
-
 
   int (*func)(BYTE para, cORBlocal &ptr) =  (int (*)(BYTE, cORBlocal &))(*addr);
 

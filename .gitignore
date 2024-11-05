@@ -1,1 +1,7 @@
 *.bak
+Project/main_GCC.depend
+Project/main_GCC.elay
+.vscode/*
+.Build/*
+!Bin/flash.bat
+Bin/*

@@ -53,7 +53,7 @@ void ServoTask::ServoTask::update( void )
     {
       if( !running )    // Servo war aus und wird jetzt eingeschaltet
       {
-        pos = posSoll;  // Aktuelle Pos. unbekannt, daher Soll-Pos. übernehmen
+        pos = posSoll;  // Aktuelle Pos. unbekannt, daher Soll-Pos. ï¿½bernehmen
         pwm.set( pos );
         running = true;
       }

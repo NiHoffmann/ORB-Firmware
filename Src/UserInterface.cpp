@@ -8,6 +8,7 @@
 //*******************************************************************
 #include "lib.h"
 #include "UserInterface.h"
+#include "orb_config_port.h"
 
 //*******************************************************************
 extern DigitalIndicator      indUsr1;
@@ -26,10 +27,12 @@ extern DigitalIndicator pwrIndicator;
 //*******************************************************************
 //-------------------------------------------------------------------
 UserInterface::UserInterface( AppTask      &app,
+                              PythonTask   &pythonTask,
                               Settings     &settings )
 
  : settings(settings)
  , app     ( app )
+ , pythonTask( pythonTask )
 
 {
 }
@@ -43,17 +46,17 @@ void UserInterface::update()
   switch( action1 == DigitalButton::NONE ? action2 : action1 )
   {
     case DigitalButton::SHORT:
-      if( app.isRunning() )  stopApp();
-      else                   startApp(0);
+      if( isAppActive() )  stopApp();
+      else                 startApp(0);
       break;
 
     case DigitalButton::LONG:
-      if( app.isRunning() )  stopApp();
-      else                   startApp(1);
+      if( isAppActive() )  stopApp();
+      else                 startApp(1);
       break;
   }
 
-  if( !app.isRunning() )
+  if( !isAppActive())
   {
      indUsr1.clr();
      indUsr2.clr();
@@ -63,27 +66,47 @@ void UserInterface::update()
 //-------------------------------------------------------------------
 void UserInterface::startApp( BYTE param )
 {
-  if( !app.isRunning())
-  {
-    if( param )
-      indUsr2.set();
-    else
-      indUsr1.set();
-    app.Start(param);
-  }
+    if(!isAppActive())
+    {
+        pythonTask.clearException();
+        BYTE languageSelectFlag = programMem.read(0);
+
+        switch(languageSelectFlag){
+            case LANGUAGE_PYTHON:
+                pythonTask.Start(param);
+                break;
+            case LANGUAGE_CPP:
+                app.Start(param);
+                break;
+            default:
+                  indUsr1.set();
+                  indUsr2.set();
+        }
+
+        if( param ){
+          indUsr1.clr();
+          indUsr2.set();
+        }else{
+          indUsr1.set();
+          indUsr2.clr();
+        }
+    }
 }
 
 //-------------------------------------------------------------------
 void UserInterface::stopApp()
 {
-  if( app.isRunning())
+  if(pythonTask.isRunning()){
+    pythonTask.userInterrupt();
+  }else if( app.isRunning()){
     app.stop();
+  }
 }
 
 //-------------------------------------------------------------------
 bool UserInterface::isAppActive()
 {
-  return( app.isRunning() );
+  return( app.isRunning() || pythonTask.isRunning() || pythonTask.isStarting());
 }
 
 //-------------------------------------------------------------------
@@ -95,8 +118,10 @@ void UserInterface::setMonitorEvent( BYTE event )
 //-------------------------------------------------------------------
 void UserInterface::setVcc( BYTE Vcc )
 {
+
   if     ( Vcc > settings.getVccLevelOK()  )  { pwrIndicator.setBrightness( 20); pwrIndicator.blink(1000, 90); }
   else if( Vcc > settings.getVccLevelLow() )  { pwrIndicator.setBrightness( 50); pwrIndicator.blink(1000, 50); }
   else                                        { pwrIndicator.setBrightness(100); pwrIndicator.blink( 200, 50); }
+
 }
 //EOF

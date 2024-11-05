@@ -22,7 +22,6 @@ class Bluetooth
     {
     }
 
-  protected:
     //---------------------------------------------------------------
     virtual bool send(const char *str)
     {

@@ -9,6 +9,7 @@
 #include "lib.h"
 #include <math.h>
 #include "Motor.h"
+#include "AppTask.h"
 
 //*******************************************************************
 static const float a0     = 0.05f;
@@ -32,6 +33,16 @@ Motor::Motor( cDevMotor  &motorIn,
      measuredPos = 0;
      enc.get();
    }
+
+void printt(BYTE line, const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    AppTask::setMonitorText(nullptr, line, format, args);
+
+    va_end(args);
+}
+
+
 
 //-------------------------------------------------------------------
 void Motor::update( void )
