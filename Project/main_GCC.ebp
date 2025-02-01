@@ -1796,6 +1796,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\ORB-Python\src\modules\Devices\Sensor\SensorModule.h" />
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Sensor\SensorReport.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\ORB-Python\src\modules\Devices\Sensor\SensorReport.h" />
 		<Unit filename="..\..\ORB-Python\src\modules\Devices\Servo\ServoModule.c">
 			<Option compilerVar="CC" />
 		</Unit>
