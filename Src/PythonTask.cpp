@@ -13,9 +13,7 @@
 extern "C"{
     #include "python-vm.h"
 }
-#ifdef ORB_ENABLE_MONITOR_STD_OUT
-    #include "Monitor_C_Interface.h"
-#endif
+#include "Monitor_C_Interface.h"
 
 extern DigitalIndicator      indUsr2;
 PythonVM vm;
